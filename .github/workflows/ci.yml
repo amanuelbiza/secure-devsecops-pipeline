@@ -2,9 +2,11 @@ name: DevSecOps CI Pipeline
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   build-and-test:
@@ -40,7 +42,7 @@ jobs:
       - name: Build Docker image
         run: docker build -t secure-devsecops-app .
 
-              - name: Scan Docker image with Trivy
+      - name: Scan Docker image with Trivy
         run: |
           docker run --rm \
             -v /var/run/docker.sock:/var/run/docker.sock \
