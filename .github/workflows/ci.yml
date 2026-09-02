@@ -19,11 +19,23 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
+      - name: Install application dependencies
         run: pip install -r requirements.txt
 
       - name: Check Python code
         run: python -m compileall app.py
+
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      - name: Run Semgrep SAST scan
+        run: semgrep scan --config auto
+
+      - name: Install dependency scanner
+        run: pip install pip-audit
+
+      - name: Scan Python dependencies
+        run: pip-audit -r requirements.txt
 
       - name: Build Docker image
         run: docker build -t secure-devsecops-app .
